@@ -1,0 +1,6 @@
+
+# Ide temp directories
+.idea/
+
+# build stuff
+target/
