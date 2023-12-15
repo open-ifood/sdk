@@ -168,7 +168,6 @@ curl 'https://marketplace.ifood.com.br/v3/identity-providers/OTP/authentications
   -H 'authority: marketplace.ifood.com.br' \
   -H 'accept: application/json, text/plain, */*' \
   -H 'accept-language: pt-BR,pt;q=1' \
-  -H 'account_id: de5659e1-dbbc-4c30-9188-c327e815002d' \
   -H 'app_version: 9.102.21' \
   -H 'browser: Mac OS' \
   -H 'cache-control: no-cache, no-store' \
