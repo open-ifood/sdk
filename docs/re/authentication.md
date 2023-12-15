@@ -195,3 +195,25 @@ And then, the access token to authorize will be received at response.
 ## oAuth2 Authentication
 
 [WIP: Pretty soon...](https://github.com/open-ifood/sdk/issues/1)
+
+## Refreshing Access Token
+
+After authenticated with the methods above, the `access_token` can expire after an amount of time.
+
+```bash
+curl --location 'https://marketplace.ifood.com.br/v2/access_tokens' \
+--header 'x-client-application-key: 54z2laLEcZ0gzfERl27dEu1N' \
+--header 'Content-Type: application/json' \
+--data '{  
+    "refresh_token": "REFRESH_JWT_TOKEN"
+}'
+```
+
+And then, we'll receive as a response a new `access_token` and a new `refresh_token`.
+
+```json
+{
+  "access_token": "ACCESS_TOKEN_JWT",
+  "refresh_token": "REFRESH_TOKEN_JWT"
+}
+```
