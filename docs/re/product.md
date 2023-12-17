@@ -78,3 +78,86 @@ So, the response will be.
   }
 ]
 ```
+
+## Get merchant catalog
+
+```bash
+curl --location 'https://marketplace.ifood.com.br/v1/merchants/MERCHANT_ID/catalog?
+latitude=LATITUDE&longitude=LONGITUDE' \
+--header 'Authorization: Bearer ACCESS_TOKEN'
+```
+
+If request was evaluate successfully, then the response will be something like that.
+
+```json
+{
+    "code": "00",
+    "data": {
+        "menu": [
+            {
+                "code": "3108f2af-027f-4b9c-bf95-c47f78accb6b",
+                "name": "Açaí No Copo",
+                "itens": [
+                    {
+                        "id": "08717f80-df2f-4524-bbd1-b99e212e26fd",
+                        "code": "08717f80-df2f-4524-bbd1-b99e212e26fd",
+                        "description": "Açaí No Copo 300ml",
+                        "needChoices": true,
+                        "choices": [
+                            {
+                                "code": "1FA7F6",
+                                "name": "Opções",
+                                "min": 1,
+                                "max": 2,
+                                "garnishItens": [
+                                    {
+                                        "id": "194507c5-acbc-445d-b9b5-6e49058d0c25",
+                                        "code": "194507c5-acbc-445d-b9b5-6e49058d0c25",
+                                        "description": "Morango",
+                                        "unitPrice": 0.00
+                                    },
+                                    {
+                                        "id": "a2f78a6e-cef4-4734-a98d-bad170692cfa",
+                                        "code": "a2f78a6e-cef4-4734-a98d-bad170692cfa",
+                                        "description": "Hortela",
+                                        "unitPrice": 0.00
+                                    }
+                                ]
+                            },
+                            {
+                                "code": "85804D",s
+                                "name": "Opcionais",
+                                "min": 0,
+                                "max": 5,
+                                "garnishItens": [
+                                    {
+                                        "id": "f522b71d-8185-43ef-858b-f109f6cf4fd6",
+                                        "code": "f522b71d-8185-43ef-858b-f109f6cf4fd6",
+                                        "description": "Confete",
+                                        "unitPrice": 0.00
+                                    }
+                                ]
+                            }
+                        ],
+                        "unitPrice": 25.99,
+                        "unitMinPrice": 25.99,
+                        "productTags": [
+                            {
+                                "group": "PORTION_SIZE",
+                                "tags": [
+                                    "NOT_APPLICABLE"
+                                ]
+                            }
+                        ],
+                        "productInfo": {
+                            "id": "08717f80-df2f-4524-bbd1-b99e212e26fd",
+                            "quantity": 0,
+                            "unit": "g"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
