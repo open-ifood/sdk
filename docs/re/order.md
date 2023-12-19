@@ -15,7 +15,10 @@ enum Status {
     CONFIRMED,
     
     /** When the deliveryman get the order */
-    DISPATCHED
+    DISPATCHED,
+
+    /** When the customer receive the order */
+    RECEIVED_BY_CUSTOMER
 }
 ```
 
