@@ -8,11 +8,9 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import jakarta.inject.Inject;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
-import lombok.val;
+import lombok.*;
 import org.openifood.config.InstanceConfig;
+import org.openifood.dto.authentication.AuthContext;
 import org.openifood.dto.authentication.response.BusinessErrorResponse;
 import org.openifood.exception.IFoodBusinessException;
 import org.openifood.exception.IFoodSerializationException;
@@ -20,7 +18,10 @@ import org.openifood.exception.IFoodSerializationException;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Objects;
 
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractIFoodClient {
@@ -34,9 +35,17 @@ public abstract class AbstractIFoodClient {
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .create();
 
-    public <T> T evaluate(Request request, Type responseBodyClass) {
+    public <T> T evaluate(@NonNull Request request, @NonNull Type responseBodyClass, AuthContext auth) {
+        val requestBuilder = request.newBuilder();
 
-       val call = httpClient.newCall(request);
+        if (Objects.nonNull(auth)) {
+            requestBuilder.addHeader("Authorization", "Bearer " + auth.getAccessToken());
+        }
+
+        request = requestBuilder.build();
+
+        val call = httpClient.newCall(request);
+
         try {
             val response = call.execute();
 
@@ -56,6 +65,10 @@ public abstract class AbstractIFoodClient {
         }
     }
 
+    public <T> T evaluate(@NonNull Request request, @NonNull Type responseBodyClass) {
+        return evaluate(request, responseBodyClass, null);
+    }
+
     public <T> List<T> evaluateList(Request request, Type responseBodyClass) {
         return evaluate(request, getListType(responseBodyClass));
     }
@@ -71,5 +84,9 @@ public abstract class AbstractIFoodClient {
     @SneakyThrows
     protected String resolve(String relativePath) {
         return new URI(config.getMarketplaceURI()).resolve(relativePath).toString();
+    }
+
+    protected static String encode(String value) {
+        return URLEncoder.encode(value, StandardCharsets.UTF_8);
     }
 }
