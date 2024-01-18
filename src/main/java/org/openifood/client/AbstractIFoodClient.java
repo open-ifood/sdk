@@ -16,11 +16,14 @@ import org.openifood.exception.IFoodBusinessException;
 import org.openifood.exception.IFoodSerializationException;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
@@ -73,12 +76,20 @@ public abstract class AbstractIFoodClient {
         return evaluate(request, getListType(responseBodyClass));
     }
 
+    public <T> List<T> evaluateList(Request request, Type responseBodyClass, AuthContext authContext) {
+        return evaluate(request, getListType(responseBodyClass), authContext);
+    }
+
     private Type getListType(Type clazz) {
         return TypeToken.getParameterized(List.class, clazz).getType();
     }
 
     protected <T> RequestBody body(T body) {
-        return RequestBody.create(MediaType.parse("application/json"), gson.toJson(body));
+        return body(body, gson);
+    }
+
+    protected <T> RequestBody body(T body, Gson gsonInstance) {
+        return RequestBody.create(MediaType.parse("application/json"), gsonInstance.toJson(body));
     }
 
     @SneakyThrows
@@ -86,7 +97,39 @@ public abstract class AbstractIFoodClient {
         return new URI(config.getMarketplaceURI()).resolve(relativePath).toString();
     }
 
+    protected <T> String resolve(String relativePath, T params) {
+        return resolve(relativePath) + "?" + createQueryParam(params);
+    }
+
     protected static String encode(String value) {
         return URLEncoder.encode(value, StandardCharsets.UTF_8);
+    }
+
+    private <T> String createQueryParam(T params) {
+        Map<String, Object> fieldMap = new HashMap<>();
+        for (Field field : params.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            try {
+
+                val value = field.get(params);
+
+                if (value != null) {
+                    fieldMap.put(field.getName(), value);
+                }
+
+            } catch (IllegalAccessException e) {
+                throw new IllegalStateException("not possible build query param from object", e);
+            }
+        }
+
+        StringBuilder queryString = new StringBuilder();
+        for (Map.Entry<String, Object> entry : fieldMap.entrySet()) {
+            if (!queryString.isEmpty()) {
+                queryString.append("&");
+            }
+            queryString.append(entry.getKey()).append("=").append(entry.getValue());
+        }
+
+        return queryString.toString();
     }
 }

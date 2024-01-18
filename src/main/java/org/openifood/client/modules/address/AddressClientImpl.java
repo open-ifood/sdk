@@ -46,7 +46,8 @@ public class AddressClientImpl extends AbstractIFoodClient implements AddressCli
                         .get()
                         .url(resolve("v1/customers/me/addresses"))
                         .build(),
-                CustomerAddress.class
+                CustomerAddress.class,
+                authContext
         );
     }
 
