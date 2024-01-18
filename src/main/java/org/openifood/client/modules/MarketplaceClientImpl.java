@@ -9,9 +9,11 @@ import lombok.NonNull;
 import org.openifood.client.AbstractIFoodClient;
 import org.openifood.client.interfaces.MarketplaceClient;
 import org.openifood.dto.authentication.AuthContext;
+import org.openifood.dto.marketplace.request.GetMerchantCatalogParams;
 import org.openifood.dto.marketplace.request.HomeRequest;
 import org.openifood.dto.marketplace.request.HomeRequestParams;
 import org.openifood.dto.marketplace.response.HomeResponse;
+import org.openifood.dto.marketplace.response.MerchantCatalogResponse;
 
 @ApplicationScoped
 public class MarketplaceClientImpl extends AbstractIFoodClient implements MarketplaceClient {
@@ -30,6 +32,19 @@ public class MarketplaceClientImpl extends AbstractIFoodClient implements Market
                         .build(),
                 HomeResponse.class,
                 auth
+        );
+    }
+
+    @Override
+    public @NonNull MerchantCatalogResponse getMerchantCatalog(@NonNull AuthContext auth,
+                                                               @NonNull GetMerchantCatalogParams params) {
+        return evaluate(
+                new Request.Builder()
+                        .url(resolve("v1/merchants/" + params.getMerchantId() + "/catalog", params))
+                        .build(),
+                MerchantCatalogResponse.class,
+                auth,
+                FieldNamingPolicy.IDENTITY
         );
     }
 }

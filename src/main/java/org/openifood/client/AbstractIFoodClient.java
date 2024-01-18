@@ -34,12 +34,16 @@ public abstract class AbstractIFoodClient {
 
     private static final OkHttpClient httpClient = new OkHttpClient();
 
-    protected static final Gson gson = new GsonBuilder()
-            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            .create();
-
     public <T> T evaluate(@NonNull Request request, @NonNull Type responseBodyClass, AuthContext auth) {
+        return evaluate(request, responseBodyClass, auth, FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+    }
+
+    public <T> T evaluate(@NonNull Request request, @NonNull Type responseBodyClass, AuthContext auth,
+                          FieldNamingPolicy fieldNamingPolicyResponse) {
         val requestBuilder = request.newBuilder();
+        val gson = new GsonBuilder()
+                .setFieldNamingPolicy(fieldNamingPolicyResponse)
+                .create();
 
         if (Objects.nonNull(auth)) {
             requestBuilder.addHeader("Authorization", "Bearer " + auth.getAccessToken());
@@ -85,7 +89,9 @@ public abstract class AbstractIFoodClient {
     }
 
     protected <T> RequestBody body(T body) {
-        return body(body, gson);
+        return body(body, new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create());
     }
 
     protected <T> RequestBody body(T body, Gson gsonInstance) {
