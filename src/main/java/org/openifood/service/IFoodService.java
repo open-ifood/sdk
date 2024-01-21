@@ -26,7 +26,7 @@ public interface IFoodService {
      * @return a default service instance (entry point for all other services like authentication,
      * merchants, order, address)
      */
-    default IFoodService initialize() {
+    static IFoodService initialize() {
         return IFoodServiceImpl.getInstance();
     }
 }

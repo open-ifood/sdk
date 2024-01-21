@@ -1,8 +1,9 @@
 package org.openifood.config;
 
-import com.sun.tools.javac.Main;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class InstanceConfig {
@@ -15,6 +16,10 @@ public class InstanceConfig {
 
     public String getLegacyAppKey() {
         return "54z2laLEcZ0gzfERl27dEu1N";
+    }
+
+    public String getRandomDeviceUUID() {
+        return UUID.randomUUID().toString();
     }
 
     public static InstanceConfig config() {

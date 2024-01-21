@@ -1,17 +1,20 @@
 package org.openifood.dto.authentication.response;
 
 
-import lombok.AccessLevel;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.openifood.service.modules.AddressModule;
 import org.openifood.service.modules.MerchantModule;
 import org.openifood.service.modules.OrderModule;
 
-@RequiredArgsConstructor(access = AccessLevel.MODULE)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.NONE, force = true)
 public class UserSession {
 
     private final AuthenticationResponse authenticationResponse;
+
+    public static UserSession from(@NonNull AuthenticationResponse authenticationResponse) {
+        return new UserSession(authenticationResponse);
+    }
 
     /**
      * Refresh user session access token.
