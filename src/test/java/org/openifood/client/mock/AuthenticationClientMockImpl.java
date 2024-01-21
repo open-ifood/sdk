@@ -3,13 +3,11 @@ package org.openifood.client.mock;
 import lombok.NonNull;
 import org.openifood.client.AuthenticationClient;
 import org.openifood.dto.authentication.IdentityProvider;
-import org.openifood.dto.authentication.request.AuthenticationRequest;
-import org.openifood.dto.authentication.request.ConfirmAuthCodeRequest;
-import org.openifood.dto.authentication.request.EmailAuthenticationRequest;
-import org.openifood.dto.authentication.request.GetIdentityProvidersRequest;
+import org.openifood.dto.authentication.request.*;
 import org.openifood.dto.authentication.response.AuthenticationResponse;
 import org.openifood.dto.authentication.response.AuthorizationCodeSentResponse;
 import org.openifood.dto.authentication.response.ConfirmAuthCodeResponse;
+import org.openifood.dto.authentication.response.RefreshAccessTokenResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,5 +42,13 @@ public class AuthenticationClientMockImpl implements AuthenticationClient {
                 .accessToken("VALID_ACCESS_TOKEN")
                 .refreshToken("REFRESH_TOKEN")
                 .build();
+    }
+
+    @Override
+    public @NonNull RefreshAccessTokenResponse refresh(@NonNull RefreshAccessTokenRequest request) {
+        return new RefreshAccessTokenResponse(
+                "new_access_token",
+                "new_refresh_token"
+        );
     }
 }

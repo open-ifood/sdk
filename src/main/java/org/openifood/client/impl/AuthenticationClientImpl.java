@@ -4,17 +4,14 @@ import com.squareup.okhttp.Request;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import org.openifood.client.AuthenticationClient;
 import org.openifood.config.InstanceConfig;
 import org.openifood.dto.authentication.IdentityProvider;
-import org.openifood.dto.authentication.request.AuthenticationRequest;
-import org.openifood.dto.authentication.request.ConfirmAuthCodeRequest;
-import org.openifood.dto.authentication.request.EmailAuthenticationRequest;
-import org.openifood.dto.authentication.request.GetIdentityProvidersRequest;
+import org.openifood.dto.authentication.request.*;
 import org.openifood.dto.authentication.response.AuthenticationResponse;
 import org.openifood.dto.authentication.response.AuthorizationCodeSentResponse;
 import org.openifood.dto.authentication.response.ConfirmAuthCodeResponse;
+import org.openifood.dto.authentication.response.RefreshAccessTokenResponse;
 
 import java.util.List;
 
@@ -71,6 +68,17 @@ public class AuthenticationClientImpl extends AbstractIFoodClient implements Aut
                         .post(body(request))
                         .build(),
                 AuthenticationResponse.class
+        );
+    }
+
+    @Override
+    public @NonNull RefreshAccessTokenResponse refresh(@NonNull RefreshAccessTokenRequest request) {
+        return evaluate(
+                new Request.Builder()
+                        .url(resolve("v2/access_tokens"))
+                        .post(body(request))
+                        .build(),
+                RefreshAccessTokenResponse.class
         );
     }
 }

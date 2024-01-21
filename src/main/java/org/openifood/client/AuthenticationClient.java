@@ -4,13 +4,11 @@ import lombok.NonNull;
 import org.openifood.client.impl.AuthenticationClientImpl;
 import org.openifood.config.InstanceConfig;
 import org.openifood.dto.authentication.IdentityProvider;
-import org.openifood.dto.authentication.request.AuthenticationRequest;
-import org.openifood.dto.authentication.request.EmailAuthenticationRequest;
-import org.openifood.dto.authentication.request.ConfirmAuthCodeRequest;
-import org.openifood.dto.authentication.request.GetIdentityProvidersRequest;
+import org.openifood.dto.authentication.request.*;
 import org.openifood.dto.authentication.response.AuthenticationResponse;
 import org.openifood.dto.authentication.response.AuthorizationCodeSentResponse;
 import org.openifood.dto.authentication.response.ConfirmAuthCodeResponse;
+import org.openifood.dto.authentication.response.RefreshAccessTokenResponse;
 
 import java.util.List;
 
@@ -46,6 +44,8 @@ public interface AuthenticationClient {
      * @return accessToken and refreshToken to complete account access.
      */
     @NonNull AuthenticationResponse authenticate(@NonNull AuthenticationRequest request);
+
+    @NonNull RefreshAccessTokenResponse refresh(@NonNull RefreshAccessTokenRequest request);
 
     static AuthenticationClient initialize(@NonNull InstanceConfig config) {
         return AuthenticationClientImpl.getInstance(config);

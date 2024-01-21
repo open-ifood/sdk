@@ -2,6 +2,9 @@ package org.openifood.dto.authentication.response;
 
 
 import lombok.*;
+import org.openifood.client.AuthenticationClient;
+import org.openifood.config.InstanceConfig;
+import org.openifood.dto.authentication.request.RefreshAccessTokenRequest;
 import org.openifood.service.modules.AddressModule;
 import org.openifood.service.modules.MerchantModule;
 import org.openifood.service.modules.OrderModule;
@@ -10,7 +13,10 @@ import org.openifood.service.modules.OrderModule;
 @NoArgsConstructor(access = AccessLevel.NONE, force = true)
 public class UserSession {
 
-    private final AuthenticationResponse authenticationResponse;
+    final AuthenticationResponse authenticationResponse;
+
+    private final AuthenticationClient authenticationClient =
+            AuthenticationClient.initialize(InstanceConfig.config());
 
     public static UserSession from(@NonNull AuthenticationResponse authenticationResponse) {
         return new UserSession(authenticationResponse);
@@ -20,7 +26,12 @@ public class UserSession {
      * Refresh user session access token.
      */
     public UserSession refresh() {
-        // TODO: refresh user session
+        val tokens = authenticationClient.refresh(
+                new RefreshAccessTokenRequest(authenticationResponse.getRefreshToken())
+        );
+
+        authenticationResponse.refresh(tokens.getAccessToken(), tokens.getRefreshToken());
+
         return this;
     }
 
