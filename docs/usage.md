@@ -3,7 +3,8 @@
 ## User - authentication module
 
 ```js
-IFoodClient.user()
+// -> request auth code
+UserAuthenticationSession = IFoodClient.user()
     .auth()
     .authenticate(
         AuthRequest.builder()
@@ -12,22 +13,11 @@ IFoodClient.user()
             .build()
     )
 
-// -> request auth code
+// confirm auth code received
+UserSession = UserAuthenticationSession.confirm("001010")
 
-UserSession = IFoodClient.user()
-    .auth()
-    .confirm(
-        AuthConfirmation.builder().build()
-    )
-
-// -> confirm auth code received 
-// -> generate final access token
-
-IFoodClient.user()
-    .auth()
-    .refresh(accessToken)
-
-// -> force refresh token
+// force refresh token
+UserSession.refresh(accessToken)
 ```
 
 ## User - address 
