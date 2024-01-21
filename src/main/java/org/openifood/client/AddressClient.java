@@ -1,6 +1,8 @@
-package org.openifood.client.interfaces;
+package org.openifood.client;
 
 import lombok.NonNull;
+import org.openifood.client.impl.AddressClientImpl;
+import org.openifood.config.InstanceConfig;
 import org.openifood.dto.authentication.AuthContext;
 import org.openifood.dto.address.request.CreateAddressRequest;
 import org.openifood.dto.address.response.CustomerAddress;
@@ -38,5 +40,9 @@ public interface AddressClient {
      */
     @NonNull CustomerAddress createAddress(@NonNull AuthContext authContext,
                                            @NonNull CreateAddressRequest request);
+
+    static AddressClient initialize(@NonNull InstanceConfig instanceConfig) {
+        return AddressClientImpl.getInstance(instanceConfig);
+    }
 
 }

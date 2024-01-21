@@ -1,4 +1,4 @@
-package org.openifood.client;
+package org.openifood.client.impl;
 
 
 import com.google.gson.*;
@@ -7,7 +7,6 @@ import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
-import jakarta.inject.Inject;
 import lombok.*;
 import org.openifood.config.InstanceConfig;
 import org.openifood.dto.authentication.AuthContext;
@@ -27,10 +26,10 @@ import java.util.Map;
 import java.util.Objects;
 
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 public abstract class AbstractIFoodClient {
 
-    @Inject
-    InstanceConfig config;
+    protected final InstanceConfig config;
 
     private static final OkHttpClient httpClient = new OkHttpClient();
 

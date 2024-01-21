@@ -1,13 +1,14 @@
-package org.openifood.client.modules;
+package org.openifood.client.impl;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.Request;
-import jakarta.enterprise.context.ApplicationScoped;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import org.openifood.client.AbstractIFoodClient;
-import org.openifood.client.interfaces.MarketplaceClient;
+import org.openifood.client.MarketplaceClient;
+import org.openifood.config.InstanceConfig;
 import org.openifood.dto.authentication.AuthContext;
 import org.openifood.dto.marketplace.request.GetMerchantCatalogParams;
 import org.openifood.dto.marketplace.request.HomeRequest;
@@ -15,8 +16,16 @@ import org.openifood.dto.marketplace.request.HomeRequestParams;
 import org.openifood.dto.marketplace.response.HomeResponse;
 import org.openifood.dto.marketplace.response.MerchantCatalogResponse;
 
-@ApplicationScoped
+@NoArgsConstructor(access = AccessLevel.NONE)
 public class MarketplaceClientImpl extends AbstractIFoodClient implements MarketplaceClient {
+
+    private MarketplaceClientImpl(@NonNull InstanceConfig config) {
+        super(config);
+    }
+
+    public static MarketplaceClient getInstance(@NonNull InstanceConfig config) {
+        return new MarketplaceClientImpl(config);
+    }
 
     private static final Gson gson = new GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)

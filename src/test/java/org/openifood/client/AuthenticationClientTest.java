@@ -1,24 +1,23 @@
-package org.openifood.client.interfaces;
+package org.openifood.client;
 
-import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
 import lombok.val;
 import org.junit.jupiter.api.Test;
+import org.openifood.client.AuthenticationClient;
+import org.openifood.config.InstanceConfig;
 import org.openifood.dto.authentication.request.AuthenticationRequest;
-import org.openifood.dto.authentication.request.AuthorizationCodeRequest;
 import org.openifood.dto.authentication.request.ConfirmAuthCodeRequest;
+import org.openifood.dto.authentication.request.EmailAuthenticationRequest;
 import org.openifood.dto.authentication.request.GetIdentityProvidersRequest;
 import org.openifood.exception.IFoodBusinessException;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@QuarkusTest
 class AuthenticationClientTest {
 
-    @Inject
-    AuthenticationClient client;
+    private final AuthenticationClient client = AuthenticationClient.initialize(InstanceConfig.config());
 
     @Test
     void shouldReturnIdentityProviders() {
@@ -37,7 +36,7 @@ class AuthenticationClientTest {
     @Test
     void shouldInitializeRequestAuthorization() {
         val response = client.requestAuthorizationCode(
-            AuthorizationCodeRequest.builder()
+            EmailAuthenticationRequest.builder()
                     .email("email@domain.com")
                     .type("EMAIL")
                     .tenantId("IFO")

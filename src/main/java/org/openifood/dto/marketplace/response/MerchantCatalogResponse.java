@@ -12,10 +12,10 @@ public class MerchantCatalogResponse {
     String code;
 
     /** All wrapped data are here. */
-    Data data;
+    MerchantCatalog data;
 
     @Value
-    public static class Data {
+    public static class MerchantCatalog {
         List<MerchantCategory> menu;
     }
 

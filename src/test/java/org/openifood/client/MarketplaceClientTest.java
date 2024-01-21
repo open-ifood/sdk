@@ -1,10 +1,10 @@
-package org.openifood.client.interfaces;
+package org.openifood.client;
 
-import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
 import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openifood.client.MarketplaceClient;
+import org.openifood.config.InstanceConfig;
 import org.openifood.dto.authentication.AuthContext;
 import org.openifood.dto.marketplace.request.GetMerchantCatalogParams;
 import org.openifood.dto.marketplace.request.HomeRequest;
@@ -13,11 +13,9 @@ import org.openifood.exception.IFoodBusinessException;
 
 import java.util.List;
 
-@QuarkusTest
 public class MarketplaceClientTest {
 
-    @Inject
-    MarketplaceClient client;
+    private final MarketplaceClient client = MarketplaceClient.initialize(InstanceConfig.config());
 
     @Test
     void shouldGetMerchantCatalog() {

@@ -1,6 +1,8 @@
-package org.openifood.client.interfaces;
+package org.openifood.client;
 
 import lombok.NonNull;
+import org.openifood.client.impl.MarketplaceClientImpl;
+import org.openifood.config.InstanceConfig;
 import org.openifood.dto.authentication.AuthContext;
 import org.openifood.dto.marketplace.request.GetMerchantCatalogParams;
 import org.openifood.dto.marketplace.request.HomeRequest;
@@ -32,5 +34,9 @@ public interface MarketplaceClient {
      */
     @NonNull MerchantCatalogResponse getMerchantCatalog(@NonNull AuthContext auth,
                                                         @NonNull GetMerchantCatalogParams params);
+
+    static MarketplaceClient initialize(@NonNull InstanceConfig instanceConfig) {
+        return MarketplaceClientImpl.getInstance(instanceConfig);
+    }
 
 }

@@ -1,25 +1,28 @@
-package org.openifood.client.modules.address;
+package org.openifood.client.impl;
 
 import com.squareup.okhttp.Request;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import lombok.NonNull;
-import lombok.SneakyThrows;
-import org.openifood.client.AbstractIFoodClient;
-import org.openifood.client.interfaces.AddressClient;
+import lombok.*;
+import org.openifood.client.impl.AbstractIFoodClient;
+import org.openifood.client.AddressClient;
 import org.openifood.config.InstanceConfig;
-import org.openifood.dto.authentication.AuthContext;
 import org.openifood.dto.address.request.CreateAddressRequest;
 import org.openifood.dto.address.response.CustomerAddress;
 import org.openifood.dto.address.response.GeocodeAddressResponse;
+import org.openifood.dto.authentication.AuthContext;
 
 import java.util.List;
 
-@ApplicationScoped
+@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.NONE)
 public class AddressClientImpl extends AbstractIFoodClient implements AddressClient {
 
-    @Inject
-    InstanceConfig config;
+    private AddressClientImpl(@NonNull InstanceConfig instanceConfig) {
+        super(instanceConfig);
+    }
+
+    public static AddressClient getInstance(@NonNull InstanceConfig instanceConfig) {
+        return new AddressClientImpl(instanceConfig);
+    }
 
     @Override
     @SneakyThrows

@@ -1,20 +1,17 @@
-package org.openifood.client.interfaces;
+package org.openifood.client;
 
-import io.quarkus.test.junit.QuarkusTest;
-import jakarta.enterprise.inject.spi.CDI;
-import jakarta.inject.Inject;
 import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openifood.client.AddressClient;
+import org.openifood.config.InstanceConfig;
 import org.openifood.dto.address.request.CreateAddressRequest;
 import org.openifood.dto.authentication.AuthContext;
 import org.openifood.exception.IFoodBusinessException;
 
-@QuarkusTest
 public class AddressClientTest {
 
-    @Inject
-    AddressClient client;
+    private final AddressClient client = AddressClient.initialize(InstanceConfig.config());
 
     @Test
     void shouldGeocodeAddressLine() {
