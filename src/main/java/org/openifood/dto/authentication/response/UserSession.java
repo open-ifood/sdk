@@ -48,7 +48,7 @@ public class UserSession {
     }
 
     public @NonNull MerchantModule merchant() {
-        return null;
+        return MerchantModule.initialize(this);
     }
 
     public @NonNull OrderModule order() {

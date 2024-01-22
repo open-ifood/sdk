@@ -54,7 +54,7 @@ public class MarketplaceClientTest {
                             .longitude("-44.0211396")
                             .channel("IFOOD")
                             .alias("HOME_FOOD_DELIVERY")
-                            .size("20")
+                            .size(20)
                             .build()
             );
         });

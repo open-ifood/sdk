@@ -1,11 +1,13 @@
 package org.openifood.dto.marketplace;
 
+import lombok.Builder;
 import lombok.Value;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Value
+@Builder
 public class Product {
     String id;
     /** same uuid_v4 at {@link #id} */

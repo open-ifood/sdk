@@ -11,7 +11,7 @@ public class HomeRequestParams {
     /** default: IFOOD */
     String channel;
     /** Quantity merchants to retrieve per page */
-    String size;
+    Integer size;
     /** default: PIX */
     String payment_types;
     /** choose a field to sort (e.g. by rating -> user_rating:asc) */

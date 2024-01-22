@@ -40,7 +40,8 @@ public class MarketplaceClientImpl extends AbstractIFoodClient implements Market
                         .post(body(request, gson))
                         .build(),
                 HomeResponse.class,
-                session
+                session,
+                FieldNamingPolicy.IDENTITY
         );
     }
 
