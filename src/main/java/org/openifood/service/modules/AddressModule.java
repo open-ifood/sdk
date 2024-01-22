@@ -1,9 +1,11 @@
 package org.openifood.service.modules;
 
 import lombok.NonNull;
-import org.openifood.dto.address.Address;
 import org.openifood.dto.address.request.CreateAddressRequest;
+import org.openifood.dto.address.response.CustomerAddress;
 import org.openifood.dto.address.response.GeocodeAddressResponse;
+import org.openifood.dto.authentication.response.UserSession;
+import org.openifood.service.modules.impl.AddressModuleImpl;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ public interface AddressModule {
     /**
      * @return all user address.
      */
-    List<Address> list();
+    List<CustomerAddress> list();
 
     /**
      * Geocode getting information by searching address string line.
@@ -29,5 +31,9 @@ public interface AddressModule {
      *
      * @param address geocoded address format. see more {@link #geocode(String)}
      */
-    Address create(CreateAddressRequest address);
+    CustomerAddress create(CreateAddressRequest address);
+
+    static AddressModule initialize(@NonNull UserSession session) {
+        return AddressModuleImpl.getInstance(session);
+    }
 }

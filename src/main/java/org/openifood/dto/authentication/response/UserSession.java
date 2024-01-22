@@ -13,7 +13,7 @@ import org.openifood.service.modules.OrderModule;
 @NoArgsConstructor(access = AccessLevel.NONE, force = true)
 public class UserSession {
 
-    final AuthenticationResponse authenticationResponse;
+    private final AuthenticationResponse authenticationResponse;
 
     private final AuthenticationClient authenticationClient =
             AuthenticationClient.initialize(InstanceConfig.config());
@@ -35,8 +35,16 @@ public class UserSession {
         return this;
     }
 
+    public String getAccessToken() {
+        return authenticationResponse.getAccessToken();
+    }
+
+    public String getRefreshToken() {
+        return authenticationResponse.getRefreshToken();
+    }
+
     public @NonNull AddressModule address() {
-        return null;
+        return AddressModule.initialize(this);
     }
 
     public @NonNull MerchantModule merchant() {

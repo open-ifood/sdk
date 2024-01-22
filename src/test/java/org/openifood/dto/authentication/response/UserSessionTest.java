@@ -29,8 +29,8 @@ class UserSessionTest {
         ).refresh();
 
         assertNotNull(session);
-        assertEquals("new_access_token", session.authenticationResponse.getAccessToken());
-        assertEquals("new_refresh_token", session.authenticationResponse.getRefreshToken());
+        assertEquals("new_access_token", session.getAccessToken());
+        assertEquals("new_refresh_token", session.getRefreshToken());
 
         client.close();
     }

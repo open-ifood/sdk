@@ -2,6 +2,7 @@ package org.openifood.config;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ public class InstanceConfig {
         return "https://marketplace.ifood.com.br/";
     }
 
-    public String getLegacyAppKey() {
+    public @NonNull String getLegacyAppKey() {
         return "54z2laLEcZ0gzfERl27dEu1N";
     }
 

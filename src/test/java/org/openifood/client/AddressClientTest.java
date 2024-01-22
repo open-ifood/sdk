@@ -7,7 +7,11 @@ import org.openifood.client.AddressClient;
 import org.openifood.config.InstanceConfig;
 import org.openifood.dto.address.request.CreateAddressRequest;
 import org.openifood.dto.authentication.AuthContext;
+import org.openifood.dto.authentication.response.AuthenticationResponse;
+import org.openifood.dto.authentication.response.UserSession;
 import org.openifood.exception.IFoodBusinessException;
+
+import java.util.UUID;
 
 public class AddressClientTest {
 
@@ -23,7 +27,14 @@ public class AddressClientTest {
     @Test
     void shouldCreateNewAddress() {
         val exception = Assertions.assertThrows(IFoodBusinessException.class, () -> client.createAddress(
-                AuthContext.from("INVALID_TOKEN"),
+                UserSession.from(
+                        AuthenticationResponse.builder()
+                                .accessToken("accessToken")
+                                .refreshToken("refreshToken")
+                                .authenticated(true)
+                                .accountId(UUID.randomUUID().toString())
+                                .build()
+                ),
                 CreateAddressRequest.builder()
                         .build()
         ));

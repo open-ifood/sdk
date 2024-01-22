@@ -9,8 +9,8 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import lombok.*;
 import org.openifood.config.InstanceConfig;
-import org.openifood.dto.authentication.AuthContext;
 import org.openifood.dto.authentication.response.BusinessErrorResponse;
+import org.openifood.dto.authentication.response.UserSession;
 import org.openifood.exception.IFoodBusinessException;
 import org.openifood.exception.IFoodSerializationException;
 
@@ -29,23 +29,23 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 public abstract class AbstractIFoodClient {
 
-    protected final InstanceConfig config;
+    protected final @NonNull InstanceConfig config;
 
     private static final OkHttpClient httpClient = new OkHttpClient();
 
-    public <T> T evaluate(@NonNull Request request, @NonNull Type responseBodyClass, AuthContext auth) {
-        return evaluate(request, responseBodyClass, auth, FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+    public <T> T evaluate(@NonNull Request request, @NonNull Type responseBodyClass, UserSession session) {
+        return evaluate(request, responseBodyClass, session, FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
     }
 
-    public <T> T evaluate(@NonNull Request request, @NonNull Type responseBodyClass, AuthContext auth,
+    public <T> T evaluate(@NonNull Request request, @NonNull Type responseBodyClass, UserSession session,
                           FieldNamingPolicy fieldNamingPolicyResponse) {
         val requestBuilder = request.newBuilder();
         val gson = new GsonBuilder()
                 .setFieldNamingPolicy(fieldNamingPolicyResponse)
                 .create();
 
-        if (Objects.nonNull(auth)) {
-            requestBuilder.addHeader("Authorization", "Bearer " + auth.getAccessToken());
+        if (Objects.nonNull(session)) {
+            requestBuilder.addHeader("Authorization", "Bearer " + session.getAccessToken());
         }
 
         request = requestBuilder.build();
@@ -79,8 +79,8 @@ public abstract class AbstractIFoodClient {
         return evaluate(request, getListType(responseBodyClass));
     }
 
-    public <T> List<T> evaluateList(Request request, Type responseBodyClass, AuthContext authContext) {
-        return evaluate(request, getListType(responseBodyClass), authContext);
+    public <T> List<T> evaluateList(Request request, Type responseBodyClass, UserSession session) {
+        return evaluate(request, getListType(responseBodyClass), session);
     }
 
     private Type getListType(Type clazz) {

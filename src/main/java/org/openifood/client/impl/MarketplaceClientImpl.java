@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.openifood.client.MarketplaceClient;
 import org.openifood.config.InstanceConfig;
-import org.openifood.dto.authentication.AuthContext;
+import org.openifood.dto.authentication.response.UserSession;
 import org.openifood.dto.marketplace.request.GetMerchantCatalogParams;
 import org.openifood.dto.marketplace.request.HomeRequest;
 import org.openifood.dto.marketplace.request.HomeRequestParams;
@@ -32,7 +32,7 @@ public class MarketplaceClientImpl extends AbstractIFoodClient implements Market
             .create();
 
     @Override
-    public @NonNull HomeResponse getHome(@NonNull AuthContext auth, @NonNull HomeRequest request,
+    public @NonNull HomeResponse getHome(@NonNull UserSession session, @NonNull HomeRequest request,
                                          @NonNull HomeRequestParams params) {
         return evaluate(
                 new Request.Builder()
@@ -40,19 +40,19 @@ public class MarketplaceClientImpl extends AbstractIFoodClient implements Market
                         .post(body(request, gson))
                         .build(),
                 HomeResponse.class,
-                auth
+                session
         );
     }
 
     @Override
-    public @NonNull MerchantCatalogResponse getMerchantCatalog(@NonNull AuthContext auth,
+    public @NonNull MerchantCatalogResponse getMerchantCatalog(@NonNull UserSession session,
                                                                @NonNull GetMerchantCatalogParams params) {
         return evaluate(
                 new Request.Builder()
                         .url(resolve("v1/merchants/" + params.getMerchantId() + "/catalog", params))
                         .build(),
                 MerchantCatalogResponse.class,
-                auth,
+                session,
                 FieldNamingPolicy.IDENTITY
         );
     }

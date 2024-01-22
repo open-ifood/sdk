@@ -1,11 +1,13 @@
 package org.openifood.dto.address.response;
 
+import lombok.Builder;
 import lombok.Value;
 import org.openifood.dto.address.Coordinate;
 
 import java.util.Date;
 
 @Value
+@Builder
 public class CustomerAddress {
     String id;
     String externalId;

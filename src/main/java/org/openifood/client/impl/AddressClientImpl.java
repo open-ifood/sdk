@@ -9,6 +9,7 @@ import org.openifood.dto.address.request.CreateAddressRequest;
 import org.openifood.dto.address.response.CustomerAddress;
 import org.openifood.dto.address.response.GeocodeAddressResponse;
 import org.openifood.dto.authentication.AuthContext;
+import org.openifood.dto.authentication.response.UserSession;
 
 import java.util.List;
 
@@ -38,24 +39,25 @@ public class AddressClientImpl extends AbstractIFoodClient implements AddressCli
     }
 
     @Override
-    public @NonNull GeocodeAddressResponse geocode(@NonNull AuthContext authContext,@NonNull String addressLine) {
+    public @NonNull GeocodeAddressResponse geocode(@NonNull UserSession session ,
+                                                   @NonNull String addressLine) {
         throw new IllegalStateException("Geocode by logistics not implemented yet");
     }
 
     @Override
-    public @NonNull List<CustomerAddress> listAddresses(@NonNull AuthContext authContext) {
+    public @NonNull List<CustomerAddress> listAddresses(@NonNull UserSession session) {
         return evaluateList(
                 new Request.Builder()
                         .get()
                         .url(resolve("v1/customers/me/addresses"))
                         .build(),
                 CustomerAddress.class,
-                authContext
+                session
         );
     }
 
     @Override
-    public @NonNull CustomerAddress createAddress(@NonNull AuthContext authContext,
+    public @NonNull CustomerAddress createAddress(@NonNull UserSession session,
                                                   @NonNull CreateAddressRequest request) {
         return evaluate(
                 new Request.Builder()
@@ -63,7 +65,7 @@ public class AddressClientImpl extends AbstractIFoodClient implements AddressCli
                         .url(resolve("v1/customers/me/addresses"))
                         .build(),
                 GeocodeAddressResponse.class,
-                authContext
+                session
         );
     }
 }
