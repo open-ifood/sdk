@@ -70,5 +70,8 @@ OrderCheckout = UserSession.order()
 // get order status
 OrderStatus = UserSession.order()
     .status(OrderId)
+
+OrderEvents = UserSession.order()
+    .events(OrderId)
 ```
 

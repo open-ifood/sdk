@@ -17,7 +17,7 @@ import org.openifood.dto.marketplace.response.HomeResponse;
 import org.openifood.dto.marketplace.response.MerchantCatalogResponse;
 
 @NoArgsConstructor(access = AccessLevel.NONE)
-public class MarketplaceClientImpl extends AbstractIFoodClient implements MarketplaceClient {
+public class MarketplaceClientImpl extends MarketplaceIFoodClient implements MarketplaceClient {
 
     private MarketplaceClientImpl(@NonNull InstanceConfig config) {
         super(config);

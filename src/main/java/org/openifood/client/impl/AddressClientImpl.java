@@ -2,20 +2,18 @@ package org.openifood.client.impl;
 
 import com.squareup.okhttp.Request;
 import lombok.*;
-import org.openifood.client.impl.AbstractIFoodClient;
 import org.openifood.client.AddressClient;
 import org.openifood.config.InstanceConfig;
 import org.openifood.dto.address.request.CreateAddressRequest;
 import org.openifood.dto.address.response.CustomerAddress;
 import org.openifood.dto.address.response.GeocodeAddressResponse;
-import org.openifood.dto.authentication.AuthContext;
 import org.openifood.dto.authentication.response.UserSession;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.NONE)
-public class AddressClientImpl extends AbstractIFoodClient implements AddressClient {
+public class AddressClientImpl extends MarketplaceIFoodClient implements AddressClient {
 
     private AddressClientImpl(@NonNull InstanceConfig instanceConfig) {
         super(instanceConfig);

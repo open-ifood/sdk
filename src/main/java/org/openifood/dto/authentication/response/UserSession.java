@@ -52,7 +52,7 @@ public class UserSession {
     }
 
     public @NonNull OrderModule order() {
-        return null;
+        return OrderModule.initialize(this);
     }
 
 }

@@ -15,6 +15,10 @@ public class InstanceConfig {
         return "https://marketplace.ifood.com.br/";
     }
 
+    public String getWebServiceStoreURI() {
+        return "https://wsloja.ifood.com.br/";
+    }
+
     public @NonNull String getLegacyAppKey() {
         return "54z2laLEcZ0gzfERl27dEu1N";
     }

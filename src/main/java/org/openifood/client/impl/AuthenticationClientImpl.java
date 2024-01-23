@@ -16,7 +16,7 @@ import org.openifood.dto.authentication.response.RefreshAccessTokenResponse;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.NONE)
-public class AuthenticationClientImpl extends AbstractIFoodClient implements AuthenticationClient{
+public class AuthenticationClientImpl extends MarketplaceIFoodClient implements AuthenticationClient{
 
     private AuthenticationClientImpl(@NonNull InstanceConfig instanceConfig) {
         super(instanceConfig);

@@ -27,7 +27,7 @@ import java.util.Objects;
 
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
-public abstract class AbstractIFoodClient {
+public abstract class MarketplaceIFoodClient {
 
     protected final @NonNull InstanceConfig config;
 
@@ -99,7 +99,7 @@ public abstract class AbstractIFoodClient {
 
     @SneakyThrows
     protected String resolve(String relativePath) {
-        return new URI(config.getMarketplaceURI()).resolve(relativePath).toString();
+        return new URI(this.getApiURI()).resolve(relativePath).toString();
     }
 
     protected <T> String resolve(String relativePath, T params) {
@@ -136,5 +136,9 @@ public abstract class AbstractIFoodClient {
         }
 
         return queryString.toString();
+    }
+
+    protected String getApiURI() {
+        return config.getMarketplaceURI();
     }
 }
